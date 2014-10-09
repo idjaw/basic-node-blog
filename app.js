@@ -1,11 +1,11 @@
 var express = require('express');
 var app = express();
 var jade = require('jade');
-var bodyParser = require('body-parser');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/blogsalot');
 var collection = db.get('blogsalot');
+var bodyParser = require('body-parser');
 
 // Setup
 app.set('port', process.env.PORT || 3000);
@@ -13,8 +13,6 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.engine('jade', require('jade').__express);
 app.use(bodyParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 // Routing Configuration
 //require('./routes/main')(app);
@@ -28,13 +26,14 @@ app.get('/', function (req, res) {
 
 app.get('/newpost', function (req, res) {
     res.render('newpost', {
-        title: 'Mix a blog',
-        message: 'Make a new blog post!'
+        blog_title: 'Mix a blog',
+        blog_post: 'Make a new blog post!'
     });
 });
 
 app.post('/submitentry', function (req, res) {
     var object = req.body;
+    console.log(object);
     collection.insert(object, function (err, doc) {
         if (err) { res.send("Error with post"); }
         else { res.redirect("/"); }
