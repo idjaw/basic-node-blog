@@ -1,0 +1,13 @@
+doctype html
+html(lang="en")
+  head
+    title=title
+  body
+    h1=message
+    form(method="POST", action="/submitentry")
+        input(type="hidden", name="_method", value="PUT")
+        p Title
+            input(type="text", name="blog_title")
+        p Post
+            input(type="text", name="blog_post")
+        input(type="submit", value="Submit")
